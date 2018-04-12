@@ -53,11 +53,12 @@ function MakeTheSearch() {
 }
 
 function fillResultadosBusqueda(response) {
+    $(".row").empty();
     $.each(response.tracks.items, function (index, value) {
 
         var div = $('<div id="idDiv" />').addClass("col-md-4");
         var div1 = $('<div id="idDiv1" />').addClass("card mb-4 box-shadow");
-        var img = $('<img id="img1" />').addClass("card-img-top").attr("src",value.album.images[0].url);
+        var img = $('<img id="img1" />').addClass("card-img-top").attr("src", value.album.images[0].url);
         var div2 = $('<div id="idDiv2" />').addClass("card-body");
         var p1 = $('<p id="nameSong" />').addClass("card-text").text(value.name);
         var p2 = $('<p />').addClass("card-text");
@@ -73,12 +74,12 @@ function fillResultadosBusqueda(response) {
         $(div3).append(small1);
         $(div2).append(p2);
 
-        var artists1="Artistas: ";
+        var artists1 = "Artistas: ";
 
         $.each(value.artists, function (index, artist) {
-           
-            artists1 += artist.name+' - ';
-         
+
+            artists1 += artist.name + ' - ';
+
         });
         artists1 = artists1.slice(0, -2);
         $(p2).text(artists1);
@@ -86,7 +87,7 @@ function fillResultadosBusqueda(response) {
 
 
     });
-   
+
 }
 
 function msToTime(s) {
@@ -96,6 +97,6 @@ function msToTime(s) {
     s = (s - secs) / 60;
     var mins = s % 60;
 
-    return  mins + ':' + secs;
+    return mins + ':' + secs;
 }
 
