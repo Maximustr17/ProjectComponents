@@ -18,14 +18,13 @@ $(document).ready(function () {
     else
         $("#BtnLogIn").attr("href",
             "https://accounts.spotify.com/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + urlToAcessAfterLogIn + "&scope=");
-
+    $("#btnToSearch").click(MakeTheSearch);
 });
 
 function AddInformationOfUser(user) {
     var image = $("<div></div>").css("background-image", "url(" + user.images[0].url + ")").addClass("profileImage");
     $("#mainBox").append(image);
     $("#txtUserName").text(user.display_name);
-    console.log(user);
 }
 function GetURLParameter(sParam) {
     var sPageUrl = window.location.hash.substring(1);
@@ -38,3 +37,15 @@ function GetURLParameter(sParam) {
     }
     return null;
 }
+
+function MakeTheSearch() {
+    var accessToken = GetURLParameter("access_token");
+    console.log($("#TextToSearch").val());
+    $.ajax({
+        url: "https://api.spotify.com/v1/search?q=" + encodeURI($("#TextToSearch").val()) + "&type=track&access_token=" + accessToken,
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
