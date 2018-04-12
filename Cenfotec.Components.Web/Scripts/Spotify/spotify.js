@@ -1,5 +1,6 @@
 ﻿var clientId = "4363a32365b6472eb659f5cdd042ed62";
-var urlToAcessAfterLogIn = "http%3A%2F%2Flocalhost%3A58438";
+var urlToAcessAfterLogIn = encodeURIComponent(window.location.origin);
+
 var scope = "user-read-private%20user-read-email%20playlist-read-private%20user-top-read%20user-library-read%20user-read-birthdate%20user-read-currently-playing";
 
 
@@ -18,7 +19,7 @@ $(document).ready(function () {
         });
     else
         $("#BtnLogIn").attr("href",
-            "https://accounts.spotify.com/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + urlToAcessAfterLogIn + "&scope=");
+            "https://accounts.spotify.com/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + urlToAcessAfterLogIn + "&scope="+scope);
     $("#btnToSearch").click(MakeTheSearch);
 });
 
@@ -53,7 +54,7 @@ function MakeTheSearch() {
 }
 
 function fillResultadosBusqueda(response) {
-    $(".row").empty();
+    $(".row").empty()
     $.each(response.tracks.items, function (index, value) {
 
         var div = $('<div id="idDiv" />').addClass("col-md-4");
