@@ -28,6 +28,7 @@ function AddInformationOfUser(user) {
     $("#mainBox").append(image);
     $("#txtUserName").text(user.display_name);
     $("#BtnLogIn").remove();
+    $("#frmBuscar").css('display', 'block');
 }
 function GetURLParameter(sParam) {
     var sPageUrl = window.location.hash.substring(1);
@@ -65,7 +66,9 @@ function fillResultadosBusqueda(response) {
         var p2 = $('<p />').addClass("card-text");
         var div3 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
         var small1 = $('<p id="small1" />').addClass("text-muted").text("Duracion: " + msToTime(value.duration_ms));
-
+        var div4 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
+        var button = $('<button onclick="GuardarCancion(this)" data-nombre="' + value.name + '"/>').addClass("btn btn-primary").text("Guardar");
+        //<button type="button" class="btn btn-danger" data-dismiss="modal">@AgendarCitas.RegionalSoft.Recursos.AdministracionEmpresas._PanelReservas.txtCancelar</button>
         $(".row").append(div);
         $(div).append(div1);
         $(div1).append(img);
@@ -74,6 +77,9 @@ function fillResultadosBusqueda(response) {
         $(div2).append(div3);
         $(div3).append(small1);
         $(div2).append(p2);
+
+        $(div2).append(div4);
+        $(div4).append(button);
 
         var artists1 = "Artistas: ";
 
@@ -99,5 +105,9 @@ function msToTime(s) {
     var mins = s % 60;
 
     return mins + ':' + secs;
+}
+
+function GuardarCancion(button) {
+
 }
 

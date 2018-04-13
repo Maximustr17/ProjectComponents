@@ -12,6 +12,8 @@ namespace Cenfotec.Components.Modelo
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class components_bdEntities : DbContext
     {
@@ -25,5 +27,34 @@ namespace Cenfotec.Components.Modelo
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual int PA_SAVE_USER(Nullable<System.Guid> user_id, string display_name, string email, string spotify_url, string href, string id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            var display_nameParameter = display_name != null ?
+                new ObjectParameter("display_name", display_name) :
+                new ObjectParameter("display_name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var spotify_urlParameter = spotify_url != null ?
+                new ObjectParameter("spotify_url", spotify_url) :
+                new ObjectParameter("spotify_url", typeof(string));
+    
+            var hrefParameter = href != null ?
+                new ObjectParameter("href", href) :
+                new ObjectParameter("href", typeof(string));
+    
+            var idParameter = id != null ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_USER", user_idParameter, display_nameParameter, emailParameter, spotify_urlParameter, hrefParameter, idParameter);
+        }
     }
 }

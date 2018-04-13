@@ -4,20 +4,38 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="PA_SAVE_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="display_name" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="spotify_url" Type="varchar" Mode="In" />
+          <Parameter Name="href" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="components_bdModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="components_bdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="components_bdEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="components_bdEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="PA_SAVE_USER">
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="display_name" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="spotify_url" Mode="In" Type="String" />
+            <Parameter Name="href" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="components_bdModelStoreContainer" CdmEntityContainer="components_bdEntities" />
+        <EntityContainerMapping StorageEntityContainer="components_bdModelStoreContainer" CdmEntityContainer="components_bdEntities" >
+          <FunctionImportMapping FunctionImportName="PA_SAVE_USER" FunctionName="components_bdModel.Store.PA_SAVE_USER" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
