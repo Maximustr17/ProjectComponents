@@ -68,10 +68,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Consultas\ConsultasWCF.svc" />
     <Content Include="Mantenimientos\MantenimientosWCF.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultas\ConsultasWCF.svc.cs">
+      <DependentUpon>ConsultasWCF.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Consultas\IConsultasWCF.cs" />
     <Compile Include="Mantenimientos\MantenimientosWCF.svc.cs">
       <DependentUpon>MantenimientosWCF.svc</DependentUpon>
     </Compile>
@@ -80,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Consultas\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

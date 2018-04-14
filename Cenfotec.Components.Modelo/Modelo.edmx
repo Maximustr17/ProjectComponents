@@ -5,6 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="PA_CONS_USER_X_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="PA_SAVE_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="display_name" Type="varchar" Mode="In" />
@@ -12,6 +17,8 @@
           <Parameter Name="spotify_url" Type="varchar" Mode="In" />
           <Parameter Name="href" Type="varchar" Mode="In" />
           <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
         </Function>
         <EntityContainer Name="components_bdModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -26,8 +33,23 @@
             <Parameter Name="spotify_url" Mode="In" Type="String" />
             <Parameter Name="href" Mode="In" Type="String" />
             <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PA_CONS_USER_X_ID" ReturnType="Collection(components_bdModel.PA_CONS_USER_X_ID_Result)">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="PA_CONS_USER_X_ID_Result">
+          <Property Type="Guid" Name="user_id" Nullable="false" />
+          <Property Type="String" Name="display_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="href" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -35,6 +57,18 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="components_bdModelStoreContainer" CdmEntityContainer="components_bdEntities" >
           <FunctionImportMapping FunctionImportName="PA_SAVE_USER" FunctionName="components_bdModel.Store.PA_SAVE_USER" />
+          <FunctionImportMapping FunctionImportName="PA_CONS_USER_X_ID" FunctionName="components_bdModel.Store.PA_CONS_USER_X_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="components_bdModel.PA_CONS_USER_X_ID_Result">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="spotify_url" ColumnName="spotify_url" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

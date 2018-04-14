@@ -1,25 +1,24 @@
-﻿using Cenfotec.Components.Entities.Mantenimientos.Entrada;
-using Cenfotec.Components.Entities.Mantenimientos.Salida;
-using Cenfotec.Components.LN.Mantenimientos;
+﻿using Cenfotec.Components.Entities.Consultas.Entrada;
+using Cenfotec.Components.Entities.Consultas.Salida;
+using Cenfotec.Components.LN.Consultas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
 
-namespace Cenfotec.Components.WS
+namespace Cenfotec.Components.WS.Consultas
 {
-    public class MantenimientosWCF : IMantenimientosWCF
+    public class ConsultasWCF : IConsultasWCF
     {
-        public SaveUserRes SaveUser(SaveUserReq oReq)
+        public RetrieveUserXIdRes RetrieveUserXId(RetrieveUserXIdReq oReq)
         {
-            MantenimientosLN mantenimientosLN = new MantenimientosLN();
-            SaveUserRes oRes = new SaveUserRes();
+            ConsultasLN consultasLN = new ConsultasLN();
+            RetrieveUserXIdRes oRes = new RetrieveUserXIdRes();
             try
             {
-                oRes = mantenimientosLN.SaveUser(oReq);
+                oRes = consultasLN.RetrieveUserXId(oReq);
             }
             catch (Exception ex)
             {
@@ -29,7 +28,7 @@ namespace Cenfotec.Components.WS
             finally
             {
                 //Liberamos la memoria
-                mantenimientosLN = null;
+                consultasLN = null;
             }
             return oRes;
         }

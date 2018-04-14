@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultas\Entrada\RetrieveUserXIdReq.cs" />
+    <Compile Include="Consultas\Salida\RetrieveUserXIdRes.cs" />
     <Compile Include="Generales\EntradaBase.cs" />
     <Compile Include="Generales\RespuestaBase.cs" />
     <Compile Include="Mantenimientos\Entrada\SaveUserReq.cs" />
@@ -53,9 +55,6 @@
       <Name>Cenfotec.Components.Modelo</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Consultas\Entrada\" />
-    <Folder Include="Consultas\Salida\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

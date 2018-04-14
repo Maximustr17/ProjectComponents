@@ -28,16 +28,19 @@ namespace Cenfotec.Components.AD.Mantenimientos
                                           , oReq.email
                                           , oReq.spotify_url
                                           , oReq.href
-                                          , oReq.id);
+                                          , oReq.id
+                                          , oEstado
+                                          , oMensaje
+                                          );
 
                     if (oEstado.Value.ToString().Equals("99"))
                     {
                         oRes.estado = "99";
                         oRes.mensaje = "MENSAJE_ERROR_AD " + oMensaje.Value.ToString();
                     }
-                    else if (true)//oEstado.Value.ToString().Equals(Constantes.COD_ERROR_GENERAL))
+                    else if (oEstado.Value.ToString().Equals("98"))
                     {
-                        //oRes.estado = Constantes.COD_ERROR_GENERAL;
+                        oRes.estado = "98";
                         oRes.mensaje = oMensaje.Value.ToString();
                     }
                 }

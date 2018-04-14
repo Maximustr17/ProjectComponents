@@ -28,7 +28,7 @@ namespace Cenfotec.Components.Modelo
         }
     
     
-        public virtual int PA_SAVE_USER(Nullable<System.Guid> user_id, string display_name, string email, string spotify_url, string href, string id)
+        public virtual int PA_SAVE_USER(Nullable<System.Guid> user_id, string display_name, string email, string spotify_url, string href, string id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
@@ -54,7 +54,16 @@ namespace Cenfotec.Components.Modelo
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_USER", user_idParameter, display_nameParameter, emailParameter, spotify_urlParameter, hrefParameter, idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_USER", user_idParameter, display_nameParameter, emailParameter, spotify_urlParameter, hrefParameter, idParameter, eSTADO, mENSAJE);
+        }
+    
+        public virtual ObjectResult<PA_CONS_USER_X_ID_Result> PA_CONS_USER_X_ID(string id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_CONS_USER_X_ID_Result>("PA_CONS_USER_X_ID", idParameter, eSTADO, mENSAJE);
         }
     }
 }

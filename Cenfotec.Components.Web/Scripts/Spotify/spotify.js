@@ -24,11 +24,50 @@ $(document).ready(function () {
 });
 
 function AddInformationOfUser(user) {
-    var image = $("<div></div>").css("background-image", "url(" + user.images[0].url + ")").addClass("profileImage");
+
+    if (user != null) {
+        var defaultUserLink = "http://www.gravatar.com/avatar/?d=mm&s=200";
+
+        var image = $("<div></div>").css("background-image", "url(" + defaultUserLink + ")").addClass("profileImage");
+        if (user.images != null && user.images.length > 0)
+        {
+            image = $("<div></div>").css("background-image", "url(" + user.images[0].url + ")").addClass("profileImage");
+        }
+    }
+
     $("#mainBox").append(image);
-    $("#txtUserName").text(user.display_name);
+
+    var display_name = user.display_name != null ? user.display_name : user.email;
+    $("#txtUserName").text(user.email);
+    $("#txtUserName").text(display_name);
     $("#BtnLogIn").remove();
     $("#frmBuscar").css('display', 'block');
+
+    if (user != null)
+    {
+        var modelo = {
+            display_name: display_name,
+            email: user.email,
+            spotify_url: user.external_urls.spotify,
+            href: user.href,
+            id: user.id
+        }
+
+        $.ajax({
+            type: "POST",
+            url: 'User/SaveUser',
+            data: JSON.stringify(modelo),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                
+            },
+            error: function () {
+
+            }
+        });
+    }
+    
 }
 function GetURLParameter(sParam) {
     var sPageUrl = window.location.hash.substring(1);

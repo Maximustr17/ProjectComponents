@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -212,6 +218,10 @@
     <ProjectReference Include="..\Cenfotec.Components.Entities\Cenfotec.Components.Entities.csproj">
       <Project>{2be70a35-121b-4f91-a301-73a50430c8b8}</Project>
       <Name>Cenfotec.Components.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cenfotec.Components.Modelo\Cenfotec.Components.Modelo.csproj">
+      <Project>{7558cc8a-40ad-4599-a924-dbd3ac16e6ce}</Project>
+      <Name>Cenfotec.Components.Modelo</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
