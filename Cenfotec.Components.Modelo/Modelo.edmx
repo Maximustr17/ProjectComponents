@@ -10,6 +10,34 @@
           <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
           <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="PA_RET_TRACK_X_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="PA_RET_TRACK_X_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_user" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="track_id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="PA_SAVE_TRACK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="track_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="spotify_url" Type="varchar" Mode="In" />
+          <Parameter Name="href" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="preview_url" Type="varchar" Mode="In" />
+          <Parameter Name="uri" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="PA_SAVE_TRACK_X_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_user" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="track_id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="PA_SAVE_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="display_name" Type="varchar" Mode="In" />
@@ -41,6 +69,34 @@
             <Parameter Name="ESTADO" Mode="InOut" Type="String" />
             <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PA_SAVE_TRACK_X_USER">
+            <Parameter Name="id_user" Mode="In" Type="Guid" />
+            <Parameter Name="track_id" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PA_SAVE_TRACK">
+            <Parameter Name="track_id" Mode="In" Type="Guid" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="spotify_url" Mode="In" Type="String" />
+            <Parameter Name="href" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="preview_url" Mode="In" Type="String" />
+            <Parameter Name="uri" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PA_RET_TRACK_X_ID" ReturnType="Collection(components_bdModel.PA_RET_TRACK_X_ID_Result)">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PA_RET_TRACK_X_USER" ReturnType="Collection(components_bdModel.PA_RET_TRACK_X_USER_Result)">
+            <Parameter Name="id_user" Mode="In" Type="Guid" />
+            <Parameter Name="track_id" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PA_CONS_USER_X_ID_Result">
           <Property Type="Guid" Name="user_id" Nullable="false" />
@@ -49,6 +105,19 @@
           <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="href" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PA_RET_TRACK_X_ID_Result">
+          <Property Type="Guid" Name="track_id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="href" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="preview_url" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="uri" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PA_RET_TRACK_X_USER_Result">
+          <Property Type="Guid" Name="id_user" Nullable="false" />
+          <Property Type="String" Name="track_id" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -66,6 +135,29 @@
                 <ScalarProperty Name="spotify_url" ColumnName="spotify_url" />
                 <ScalarProperty Name="href" ColumnName="href" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PA_SAVE_TRACK_X_USER" FunctionName="components_bdModel.Store.PA_SAVE_TRACK_X_USER" />
+          <FunctionImportMapping FunctionImportName="PA_SAVE_TRACK" FunctionName="components_bdModel.Store.PA_SAVE_TRACK" />
+          <FunctionImportMapping FunctionImportName="PA_RET_TRACK_X_ID" FunctionName="components_bdModel.Store.PA_RET_TRACK_X_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="components_bdModel.PA_RET_TRACK_X_ID_Result">
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="spotify_url" ColumnName="spotify_url" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="preview_url" ColumnName="preview_url" />
+                <ScalarProperty Name="uri" ColumnName="uri" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PA_RET_TRACK_X_USER" FunctionName="components_bdModel.Store.PA_RET_TRACK_X_USER">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="components_bdModel.PA_RET_TRACK_X_USER_Result">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

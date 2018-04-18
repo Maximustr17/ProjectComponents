@@ -13,10 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cenfotec.Components.AD", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cenfotec.Components.LN", "Cenfotec.Components.LN\Cenfotec.Components.LN.csproj", "{71E4C731-732D-4CD1-93DB-51B4655C208A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cenfotec.Components.AS", "Cenfotec.Components.AS\Cenfotec.Components.AS.csproj", "{C37CCF5D-97BF-45F9-AA7B-6C866072C37D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cenfotec.Components.WS", "Cenfotec.Components.WS\Cenfotec.Components.WS.csproj", "{E7A37338-88E9-4382-98ED-AA9B9783AB51}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,14 +39,6 @@ Global
 		{71E4C731-732D-4CD1-93DB-51B4655C208A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71E4C731-732D-4CD1-93DB-51B4655C208A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71E4C731-732D-4CD1-93DB-51B4655C208A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C37CCF5D-97BF-45F9-AA7B-6C866072C37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C37CCF5D-97BF-45F9-AA7B-6C866072C37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C37CCF5D-97BF-45F9-AA7B-6C866072C37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C37CCF5D-97BF-45F9-AA7B-6C866072C37D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7A37338-88E9-4382-98ED-AA9B9783AB51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7A37338-88E9-4382-98ED-AA9B9783AB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7A37338-88E9-4382-98ED-AA9B9783AB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7A37338-88E9-4382-98ED-AA9B9783AB51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

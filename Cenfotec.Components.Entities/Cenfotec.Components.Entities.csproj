@@ -41,11 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultas\Entrada\RetrieveTrackXIdReq.cs" />
     <Compile Include="Consultas\Entrada\RetrieveUserXIdReq.cs" />
+    <Compile Include="Consultas\Salida\RetrieveTrackXIdRes.cs" />
     <Compile Include="Consultas\Salida\RetrieveUserXIdRes.cs" />
     <Compile Include="Generales\EntradaBase.cs" />
     <Compile Include="Generales\RespuestaBase.cs" />
+    <Compile Include="Mantenimientos\Entrada\SaveTrackReq.cs" />
+    <Compile Include="Mantenimientos\Entrada\SaveTrackXUserReq.cs" />
     <Compile Include="Mantenimientos\Entrada\SaveUserReq.cs" />
+    <Compile Include="Mantenimientos\Salida\SaveTrackRes.cs" />
+    <Compile Include="Mantenimientos\Salida\SaveTrackXUserRes.cs" />
     <Compile Include="Mantenimientos\Salida\SaveUserRes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

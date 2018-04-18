@@ -11,6 +11,7 @@ namespace Cenfotec.Components.LN.Mantenimientos
 {
     public class MantenimientosLN
     {
+        #region Users
         public SaveUserRes SaveUser(SaveUserReq oReq)
         {
             MantenimientosAD mantenimientosAD = new MantenimientosAD();
@@ -33,5 +34,55 @@ namespace Cenfotec.Components.LN.Mantenimientos
             }
             return oRes;
         }
+        #endregion
+
+        #region Tracks
+        public SaveTrackXUserRes SaveTrackXUser(SaveTrackXUserReq oReq)
+        {
+            MantenimientosAD mantenimientosAD = new MantenimientosAD();
+            SaveTrackXUserRes oRes = new SaveTrackXUserRes();
+
+            try
+            {
+                oRes = mantenimientosAD.SaveTrackXUser(oReq);
+            }
+            catch (Exception ex)
+            {
+                oRes.estado = "99";
+                oRes.mensaje = "MENSAJE_ERROR_LN" + ((ex.InnerException != null) ? Environment.NewLine + ex.InnerException.Message : string.Empty);
+                throw;
+            }
+            finally
+            {
+                // Liberamos la memoria
+                mantenimientosAD = null;
+            }
+            return oRes;
+        }
+
+        public SaveTrackRes SaveTrack(SaveTrackReq oReq)
+        {
+            MantenimientosAD mantenimientosAD = new MantenimientosAD();
+            SaveTrackRes oRes = new SaveTrackRes();
+
+            try
+            {
+                oRes = mantenimientosAD.SaveTrack(oReq);
+            }
+            catch (Exception ex)
+            {
+                oRes.estado = "99";
+                oRes.mensaje = "MENSAJE_ERROR_LN" + ((ex.InnerException != null) ? Environment.NewLine + ex.InnerException.Message : string.Empty);
+                throw;
+            }
+            finally
+            {
+                // Liberamos la memoria
+                mantenimientosAD = null;
+            }
+            return oRes;
+        }
+        #endregion
+
     }
 }

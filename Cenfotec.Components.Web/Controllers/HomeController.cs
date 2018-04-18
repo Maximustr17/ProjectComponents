@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cenfotec.Components.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,8 @@ namespace Cenfotec.Components.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            UserModels modelo = new UserModels();
+            return View(modelo);
         }
 
         public ActionResult About()

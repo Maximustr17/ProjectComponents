@@ -60,7 +60,11 @@ function AddInformationOfUser(user) {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                
+                if (data.resultado != null)
+                {
+                    $('#hdnUserId').val(data.resultado.user_id);
+                    $('#divListaCanciones').css('display', 'block');
+                }
             },
             error: function () {
 
@@ -95,45 +99,46 @@ function MakeTheSearch() {
 
 function fillResultadosBusqueda(response) {
     $(".row").empty()
-    $.each(response.tracks.items, function (index, value) {
 
-        var div = $('<div id="idDiv" />').addClass("col-md-4");
-        var div1 = $('<div id="idDiv1" />').addClass("card mb-4 box-shadow");
-        var img = $('<img id="img1" />').addClass("card-img-top").attr("src", value.album.images[0].url);
-        var div2 = $('<div id="idDiv2" />').addClass("card-body");
-        var p1 = $('<p id="nameSong" />').addClass("card-text").text(value.name);
-        var p2 = $('<p />').addClass("card-text");
-        var div3 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
-        var small1 = $('<p id="small1" />').addClass("text-muted").text("Duracion: " + msToTime(value.duration_ms));
-        var div4 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
-        var button = $('<button onclick="GuardarCancion(this)" data-nombre="' + value.name + '"/>').addClass("btn btn-primary").text("Guardar");
-        //<button type="button" class="btn btn-danger" data-dismiss="modal">@AgendarCitas.RegionalSoft.Recursos.AdministracionEmpresas._PanelReservas.txtCancelar</button>
-        $(".row").append(div);
-        $(div).append(div1);
-        $(div1).append(img);
-        $(div1).append(div2);
-        $(div2).append(p1);
-        $(div2).append(div3);
-        $(div3).append(small1);
-        $(div2).append(p2);
+    if (response != null && response.tracks != null && response.tracks.items && response.tracks.items.length > 0) {
 
-        $(div2).append(div4);
-        $(div4).append(button);
+        $('#divNoCanciones').css('display', 'none');
+        $.each(response.tracks.items, function (index, value) {
 
-        var artists1 = "Artistas: ";
+            var div = $('<div id="idDiv" />').addClass("col-md-4");
+            var div1 = $('<div id="idDiv1" />').addClass("card mb-4 box-shadow");
+            var img = $('<img id="img1" />').addClass("card-img-top").attr("src", value.album.images[0].url);
+            var div2 = $('<div id="idDiv2" />').addClass("card-body");
+            var p1 = $('<p id="nameSong" />').addClass("card-text").text(value.name);
+            var p2 = $('<p />').addClass("card-text");
+            var div3 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
+            var small1 = $('<p id="small1" />').addClass("text-muted").text("Duracion: " + msToTime(value.duration_ms));
+            var div4 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
+            var button = $('<button onclick="GuardarCancion(this)" data-name="' + value.name + '" data-spotify_url ="' + value.external_urls.spotify + '" data-href="' + value.href + '" data-id="'+ value.id +'" data-preview_url="' + value.preview_url + '" data-uri="' +value.uri + '"/>').addClass("btn btn-primary").text("Guardar");
 
-        $.each(value.artists, function (index, artist) {
+            $(".row").append(div);
+            $(div).append(div1);
+            $(div1).append(img);
+            $(div1).append(div2);
+            $(div2).append(p1);
+            $(div2).append(div3);
+            $(div3).append(small1);
+            $(div2).append(p2);
 
-            artists1 += artist.name + ' - ';
+            $(div2).append(div4);
+            $(div4).append(button);
 
+            var artists1 = "Artistas: ";
+
+            $.each(value.artists, function (index, artist) {
+
+                artists1 += artist.name + ' - ';
+
+            });
+            artists1 = artists1.slice(0, -2);
+            $(p2).text(artists1);
         });
-        artists1 = artists1.slice(0, -2);
-        $(p2).text(artists1);
-
-
-
-    });
-
+    }
 }
 
 function msToTime(s) {
@@ -147,6 +152,33 @@ function msToTime(s) {
 }
 
 function GuardarCancion(button) {
+
+    var modelo = {
+        name: $(button).data('name'),
+        spotify_url: $(button).data('spotify_url'),
+        href: $(button).data('href'),
+        id: $(button).data('id'),
+        preview_url: $(button).data('preview_url'),
+        uri: $(button).data('uri'),
+        user_id: $('#hdnUserId').val()
+    }
+
+    $.ajax({
+        type: "POST",
+        url: 'User/SaveTrack',
+        data: JSON.stringify(modelo),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.resultado != null) {
+                $('#hdnUserId').val(data.resultado.user_id);
+                $('#divListaCanciones').css('display', 'block');
+            }
+        },
+        error: function () {
+
+        }
+    });
 
 }
 
