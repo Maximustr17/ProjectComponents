@@ -13,6 +13,6 @@ namespace Cenfotec.Components.Entities.Consultas.Salida
     public class RetrieveUserXIdRes: RespuestaBase
     {
         [DataMember]
-        public List<PA_CONS_USER_X_ID_Result> User { get; set; }
+        public List<PA_RET_USER_X_ID_Result> User { get; set; }
     }
 }

@@ -57,15 +57,6 @@ namespace Cenfotec.Components.Modelo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_USER", user_idParameter, display_nameParameter, emailParameter, spotify_urlParameter, hrefParameter, idParameter, eSTADO, mENSAJE);
         }
     
-        public virtual ObjectResult<PA_CONS_USER_X_ID_Result> PA_CONS_USER_X_ID(string id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
-        {
-            var idParameter = id != null ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_CONS_USER_X_ID_Result>("PA_CONS_USER_X_ID", idParameter, eSTADO, mENSAJE);
-        }
-    
         public virtual int PA_SAVE_TRACK_X_USER(Nullable<System.Guid> id_user, string track_id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
         {
             var id_userParameter = id_user.HasValue ?
@@ -132,6 +123,15 @@ namespace Cenfotec.Components.Modelo
                 new ObjectParameter("track_id", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_RET_TRACK_X_USER_Result>("PA_RET_TRACK_X_USER", id_userParameter, track_idParameter, eSTADO, mENSAJE);
+        }
+    
+        public virtual ObjectResult<PA_RET_USER_X_ID_Result> PA_RET_USER_X_ID(string id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_RET_USER_X_ID_Result>("PA_RET_USER_X_ID", idParameter, eSTADO, mENSAJE);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Cenfotec.Components.AD.Consltas
             {
                 using (Modelo.components_bdEntities oModelo = new Modelo.components_bdEntities())
                 {
-                    oRes.User = oModelo.PA_CONS_USER_X_ID(oReq.id, oEstado, oMensaje).ToList();
+                    oRes.User = oModelo.PA_RET_USER_X_ID(oReq.id, oEstado, oMensaje).ToList();
 
                     //Se valida el resultado
                     if (oRes.User == null || oEstado.Value.ToString().Equals("99"))
