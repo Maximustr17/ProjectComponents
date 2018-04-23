@@ -133,5 +133,14 @@ namespace Cenfotec.Components.Modelo
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_RET_USER_X_ID_Result>("PA_RET_USER_X_ID", idParameter, eSTADO, mENSAJE);
         }
+    
+        public virtual ObjectResult<PA_RET_TRACKS_SAVED_BY_USER_Result> PA_RET_TRACKS_SAVED_BY_USER(Nullable<System.Guid> id_user, ObjectParameter eSTADO, ObjectParameter mENSAJE)
+        {
+            var id_userParameter = id_user.HasValue ?
+                new ObjectParameter("id_user", id_user) :
+                new ObjectParameter("id_user", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_RET_TRACKS_SAVED_BY_USER_Result>("PA_RET_TRACKS_SAVED_BY_USER", id_userParameter, eSTADO, mENSAJE);
+        }
     }
 }

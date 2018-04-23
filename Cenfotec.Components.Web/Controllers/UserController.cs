@@ -56,10 +56,10 @@ namespace Cenfotec.Components.Web.Controllers
                             mantenimientosLN = new MantenimientosLN();
                             oSaveUsuarioReq = new SaveUserReq();    
                             oSaveUsuarioReq.user_id = Guid.NewGuid();
-                            oSaveUsuarioReq.display_name = modelo.display_name;
-                            oSaveUsuarioReq.email = modelo.email;
-                            oSaveUsuarioReq.spotify_url = modelo.spotify_url;
-                            oSaveUsuarioReq.href = modelo.href;
+                            oSaveUsuarioReq.display_name = modelo.display_name != null ? modelo.display_name : "";
+                            oSaveUsuarioReq.email = modelo.email != null ? modelo.email : "";
+                            oSaveUsuarioReq.spotify_url = modelo.spotify_url != null ? modelo.spotify_url : "";
+                            oSaveUsuarioReq.href = modelo.href != null ? modelo.href : "";
                             oSaveUsuarioReq.id = modelo.id;
 
                             oSaveUsuarioRes = mantenimientosLN.SaveUser(oSaveUsuarioReq);
@@ -95,24 +95,28 @@ namespace Cenfotec.Components.Web.Controllers
         {
             string respuesta = "00";
 
-            ConsultasLN consultasLN = null;
+            ConsultasLN consultasLN = new ConsultasLN();
+            MantenimientosLN mantenimientosLN = new MantenimientosLN(); ;
+
             RetrieveTrackXIdReq oRetTrackReq = null;
             RetrieveTrackXIdRes oRetTrackRes = null;
 
-            MantenimientosLN mantenimientosLN = null;
             SaveTrackReq oSaveTrackReq = null;
             SaveTrackRes oSaveTrackRes = null;
 
-            SaveTrackXUserReq oSaveTrackXUserreq = null;
-            SaveTrackXUserRes oSaveTrackXUserres = null;
+            RetrieveTrackXUserReq oRetTrackXUserReq = null;
+            RetrieveTrackXUserRes oRetTrackXUserRes = null;
+
+            SaveTrackXUserReq oSaveTrackXUserReq = null;
+            SaveTrackXUserRes oSaveTrackXUserRes = null;
 
             try
             {
                 if (modelo != null)
                 {
-                    consultasLN = new ConsultasLN();
                     oRetTrackReq = new RetrieveTrackXIdReq();
                     oRetTrackReq.id = modelo.id;
+                    //Consulta si la canción se encuentra en la base de datos
                     oRetTrackRes = consultasLN.RetrieveTrackXId(oRetTrackReq);
 
                     if (oRetTrackRes != null && oRetTrackRes.Track != null)
@@ -120,21 +124,19 @@ namespace Cenfotec.Components.Web.Controllers
                         if (oRetTrackRes.Track.Count > 0)
                         {
                             modelo.track_id = oRetTrackRes.Track[0].track_id;
-
-                            
                         }
                         else
                         {
-                            mantenimientosLN = new MantenimientosLN();
                             oSaveTrackReq = new SaveTrackReq();
                             oSaveTrackReq.track_id = Guid.NewGuid();
-                            oSaveTrackReq.name = modelo.name;
-                            oSaveTrackReq.spotify_url = modelo.spotify_url;
-                            oSaveTrackReq.href = modelo.href;
+                            oSaveTrackReq.name = modelo.name != null ? modelo.name : "";
+                            oSaveTrackReq.spotify_url = modelo.spotify_url != null ? modelo.spotify_url : "" ;
+                            oSaveTrackReq.href = modelo.href != null ? modelo.href : "";
                             oSaveTrackReq.id = modelo.id;
-                            oSaveTrackReq.preview_url = modelo.preview_url;
-                            oSaveTrackReq.uri = modelo.uri;
+                            oSaveTrackReq.preview_url = modelo.preview_url != null ? modelo.preview_url : "";
+                            oSaveTrackReq.uri = modelo.uri != null ? modelo.uri : "";
 
+                            //Si la canción no se encuentra en la base de datos la inserta
                             oSaveTrackRes = mantenimientosLN.SaveTrack(oSaveTrackReq);
 
                             if (oSaveTrackRes != null && oSaveTrackRes.estado.Equals("00"))
@@ -143,7 +145,24 @@ namespace Cenfotec.Components.Web.Controllers
                             }
                         }
 
-                        //Consultar si el usuario tiene la canción y guardarla
+                        //Consulta si el usuario tiene la canción guardada
+                        oRetTrackXUserReq = new RetrieveTrackXUserReq();
+                        oRetTrackXUserReq.id_user = modelo.user_id;
+                        oRetTrackXUserReq.track_id = modelo.id;
+
+                        oRetTrackXUserRes = consultasLN.RetrieveTrackXUser(oRetTrackXUserReq);
+
+                        if (oRetTrackXUserRes != null && oRetTrackXUserRes.Track != null)
+                        {
+                            if (oRetTrackXUserRes.Track.Count == 0)
+                            {
+                                oSaveTrackXUserReq = new SaveTrackXUserReq();
+                                oSaveTrackXUserReq.id_user = modelo.user_id;
+                                oSaveTrackXUserReq.track_id = modelo.id;
+
+                                oSaveTrackXUserRes = mantenimientosLN.SaveTrackXUser(oSaveTrackXUserReq);
+                            }
+                        }
                         return Json(new { respuesta = respuesta, resultado = modelo });
                     }
                     else
@@ -159,6 +178,11 @@ namespace Cenfotec.Components.Web.Controllers
             }
 
             return Json(new { respuesta = "00" });
+        }
+
+        public ActionResult VwSongList()
+        {
+            return View();
         }
     }
 }

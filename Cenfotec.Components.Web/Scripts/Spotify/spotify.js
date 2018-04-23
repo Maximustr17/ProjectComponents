@@ -63,7 +63,6 @@ function AddInformationOfUser(user) {
                 if (data.resultado != null)
                 {
                     $('#hdnUserId').val(data.resultado.user_id);
-                    $('#divListaCanciones').css('display', 'block');
                 }
             },
             error: function () {
@@ -73,6 +72,7 @@ function AddInformationOfUser(user) {
     }
     
 }
+
 function GetURLParameter(sParam) {
     var sPageUrl = window.location.hash.substring(1);
     var sUrlVariables = sPageUrl.split("&");
@@ -102,7 +102,6 @@ function fillResultadosBusqueda(response) {
 
     if (response != null && response.tracks != null && response.tracks.items && response.tracks.items.length > 0) {
 
-        $('#divNoCanciones').css('display', 'none');
         $.each(response.tracks.items, function (index, value) {
 
             var div = $('<div id="idDiv" />').addClass("col-md-4");
@@ -138,6 +137,8 @@ function fillResultadosBusqueda(response) {
             artists1 = artists1.slice(0, -2);
             $(p2).text(artists1);
         });
+
+        $('#ttlLista').css('display', 'block');
     }
 }
 
@@ -162,7 +163,6 @@ function GuardarCancion(button) {
         uri: $(button).data('uri'),
         user_id: $('#hdnUserId').val()
     }
-
     $.ajax({
         type: "POST",
         url: 'User/SaveTrack',
@@ -172,8 +172,11 @@ function GuardarCancion(button) {
         success: function (data) {
             if (data.resultado != null) {
                 $('#hdnUserId').val(data.resultado.user_id);
-                $('#divListaCanciones').css('display', 'block');
+
+                $(button).text('Guardada');
             }
+
+            
         },
         error: function () {
 

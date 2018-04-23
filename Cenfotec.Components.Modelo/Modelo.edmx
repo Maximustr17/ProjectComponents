@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="PA_RET_TRACK_X_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="varchar" Mode="In" />
           <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
@@ -13,6 +13,11 @@
         <Function Name="PA_RET_TRACK_X_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_user" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="track_id" Type="varchar" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="PA_RET_TRACKS_SAVED_BY_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_user" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
           <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
         </Function>
@@ -97,6 +102,11 @@
             <Parameter Name="ESTADO" Mode="InOut" Type="String" />
             <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PA_RET_TRACKS_SAVED_BY_USER" ReturnType="Collection(components_bdModel.PA_RET_TRACKS_SAVED_BY_USER_Result)">
+            <Parameter Name="id_user" Mode="In" Type="Guid" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PA_CONS_USER_X_ID_Result">
           <Property Type="Guid" Name="user_id" Nullable="false" />
@@ -126,6 +136,15 @@
           <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="href" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PA_RET_TRACKS_SAVED_BY_USER_Result">
+          <Property Type="Guid" Name="track_id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="href" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="preview_url" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="uri" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -166,6 +185,19 @@
                 <ScalarProperty Name="spotify_url" ColumnName="spotify_url" />
                 <ScalarProperty Name="href" ColumnName="href" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PA_RET_TRACKS_SAVED_BY_USER" FunctionName="components_bdModel.Store.PA_RET_TRACKS_SAVED_BY_USER">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="components_bdModel.PA_RET_TRACKS_SAVED_BY_USER_Result">
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="spotify_url" ColumnName="spotify_url" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="preview_url" ColumnName="preview_url" />
+                <ScalarProperty Name="uri" ColumnName="uri" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
