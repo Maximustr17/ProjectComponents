@@ -135,6 +135,7 @@ namespace Cenfotec.Components.Web.Controllers
                             oSaveTrackReq.id = modelo.id;
                             oSaveTrackReq.preview_url = modelo.preview_url != null ? modelo.preview_url : "";
                             oSaveTrackReq.uri = modelo.uri != null ? modelo.uri : "";
+                            oSaveTrackReq.image_url = modelo.image_url != null ? modelo.image_url : "";
 
                             //Si la canción no se encuentra en la base de datos la inserta
                             oSaveTrackRes = mantenimientosLN.SaveTrack(oSaveTrackReq);

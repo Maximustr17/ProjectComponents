@@ -34,6 +34,7 @@
           <Parameter Name="id" Type="varchar" Mode="In" />
           <Parameter Name="preview_url" Type="varchar" Mode="In" />
           <Parameter Name="uri" Type="varchar" Mode="In" />
+          <Parameter Name="image_url" Type="varchar" Mode="In" />
           <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
           <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
         </Function>
@@ -83,6 +84,7 @@
             <Parameter Name="id" Mode="In" Type="String" />
             <Parameter Name="preview_url" Mode="In" Type="String" />
             <Parameter Name="uri" Mode="In" Type="String" />
+            <Parameter Name="image_url" Mode="In" Type="String" />
             <Parameter Name="ESTADO" Mode="InOut" Type="String" />
             <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
           </FunctionImport>

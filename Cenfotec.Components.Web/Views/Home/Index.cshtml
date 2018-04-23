@@ -1,4 +1,7 @@
 ﻿@model Cenfotec.Components.Web.Models.UserModels
+@{
+    string versionAssembly = typeof(Cenfotec.Components.Web.MvcApplication).Assembly.GetName().Version.ToString();
+} 
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,13 +19,26 @@
             <h1>Xpotify</h1>
             <p class="lead">Con este Website puede ver toda su música.</p>
             <p id="txtUserName"></p>
-        </div>
+            
+            <div id="profilePhoto">
 
-        <div class="row">
-            <div class="col-md-4">
-                <a class="btn btn-primary btn-lg" id="BtnLogIn">Inicie sesion con Spotify</a>
+            </div>
+
+            <div id="misCanciones" style="margin-top:30px; display:none">
+                <div class="col-md-8">
+                    <a class="btn btn-primary btn-lg" id="btnVerCanciones"><i class="fas fa-music"></i> Mi música</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-lg" id="BtnLogIn">Inicie sesion con Spotify</a>
+                </div>
             </div>
         </div>
+       
+
+        
         <section class="jumbotron text-center">
             <div class="container">
   
@@ -42,4 +58,5 @@
 </body>
 
 </html>
-<script src="~/Scripts/Spotify/spotify.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+<script src="~/Scripts/Spotify/spotify.js?v=@(versionAssembly)"></script>

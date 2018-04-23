@@ -128,6 +128,7 @@ namespace Cenfotec.Components.AD.Mantenimientos
                                           , oReq.id
                                           , oReq.preview_url
                                           , oReq.uri
+                                          , oReq.image_url
                                           , oEstado
                                           , oMensaje
                                           );

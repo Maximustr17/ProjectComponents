@@ -31,6 +31,9 @@ namespace Cenfotec.Components.Entities.Mantenimientos.Entrada
 
         [DataMember]
         public string uri { get; set; }
+
+        [DataMember]
+        public string image_url { get; set; }
     }
 }
 

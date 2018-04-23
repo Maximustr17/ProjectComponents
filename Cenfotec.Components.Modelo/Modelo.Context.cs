@@ -70,7 +70,7 @@ namespace Cenfotec.Components.Modelo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_TRACK_X_USER", id_userParameter, track_idParameter, eSTADO, mENSAJE);
         }
     
-        public virtual int PA_SAVE_TRACK(Nullable<System.Guid> track_id, string name, string spotify_url, string href, string id, string preview_url, string uri, ObjectParameter eSTADO, ObjectParameter mENSAJE)
+        public virtual int PA_SAVE_TRACK(Nullable<System.Guid> track_id, string name, string spotify_url, string href, string id, string preview_url, string uri, string image_url, ObjectParameter eSTADO, ObjectParameter mENSAJE)
         {
             var track_idParameter = track_id.HasValue ?
                 new ObjectParameter("track_id", track_id) :
@@ -100,7 +100,11 @@ namespace Cenfotec.Components.Modelo
                 new ObjectParameter("uri", uri) :
                 new ObjectParameter("uri", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_TRACK", track_idParameter, nameParameter, spotify_urlParameter, hrefParameter, idParameter, preview_urlParameter, uriParameter, eSTADO, mENSAJE);
+            var image_urlParameter = image_url != null ?
+                new ObjectParameter("image_url", image_url) :
+                new ObjectParameter("image_url", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_SAVE_TRACK", track_idParameter, nameParameter, spotify_urlParameter, hrefParameter, idParameter, preview_urlParameter, uriParameter, image_urlParameter, eSTADO, mENSAJE);
         }
     
         public virtual ObjectResult<PA_RET_TRACK_X_ID_Result> PA_RET_TRACK_X_ID(string id, ObjectParameter eSTADO, ObjectParameter mENSAJE)

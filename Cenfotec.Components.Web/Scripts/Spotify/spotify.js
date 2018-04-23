@@ -29,46 +29,45 @@ function AddInformationOfUser(user) {
         var defaultUserLink = "http://www.gravatar.com/avatar/?d=mm&s=200";
 
         var image = $("<div></div>").css("background-image", "url(" + defaultUserLink + ")").addClass("profileImage");
-        if (user.images != null && user.images.length > 0)
-        {
+        if (user.images != null && user.images.length > 0) {
             image = $("<div></div>").css("background-image", "url(" + user.images[0].url + ")").addClass("profileImage");
         }
-    }
 
-    $("#mainBox").append(image);
+       // $("#mainBox").append(image);
+        $("#profilePhoto").append(image);
 
-    var display_name = user.display_name != null ? user.display_name : user.email;
-    $("#txtUserName").text(user.email);
-    $("#txtUserName").text(display_name);
-    $("#BtnLogIn").remove();
-    $("#frmBuscar").css('display', 'block');
+        var display_name = user.display_name != null ? user.display_name : user.email;
+        $("#txtUserName").text(user.email);
+        $("#txtUserName").text(display_name);
+        $("#BtnLogIn").remove();
+        $("#frmBuscar").css('display', 'block');
+        $("#misCanciones").css('display', 'block');
 
-    if (user != null)
-    {
-        var modelo = {
-            display_name: display_name,
-            email: user.email,
-            spotify_url: user.external_urls.spotify,
-            href: user.href,
-            id: user.id
-        }
-
-        $.ajax({
-            type: "POST",
-            url: 'User/SaveUser',
-            data: JSON.stringify(modelo),
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                if (data.resultado != null)
-                {
-                    $('#hdnUserId').val(data.resultado.user_id);
-                }
-            },
-            error: function () {
-
+        if (user != null) {
+            var modelo = {
+                display_name: display_name,
+                email: user.email,
+                spotify_url: user.external_urls.spotify,
+                href: user.href,
+                id: user.id
             }
-        });
+
+            $.ajax({
+                type: "POST",
+                url: 'User/SaveUser',
+                data: JSON.stringify(modelo),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.resultado != null) {
+                        $('#hdnUserId').val(data.resultado.user_id);
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
     }
     
 }
@@ -113,7 +112,7 @@ function fillResultadosBusqueda(response) {
             var div3 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
             var small1 = $('<p id="small1" />').addClass("text-muted").text("Duracion: " + msToTime(value.duration_ms));
             var div4 = $('<div id="idDiv3" />').addClass("d-flex justify-content-between align-items-center");
-            var button = $('<button onclick="GuardarCancion(this)" data-name="' + value.name + '" data-spotify_url ="' + value.external_urls.spotify + '" data-href="' + value.href + '" data-id="'+ value.id +'" data-preview_url="' + value.preview_url + '" data-uri="' +value.uri + '"/>').addClass("btn btn-primary").text("Guardar");
+            var button = $('<button onclick="GuardarCancion(this)" data-name="' + value.name + '" data-spotify_url ="' + value.external_urls.spotify + '" data-href="' + value.href + '" data-id="' + value.id + '" data-preview_url="' + value.preview_url + '" data-uri="' + value.uri + '" data-image_url="' + value.album.images[0].url + '"/>').addClass("btn btn-primary").html('<span> <i class="fas fa-plus" aria-hidden="true"></i></span>' + ' Guardar');
 
             $(".row").append(div);
             $(div).append(div1);
@@ -161,6 +160,7 @@ function GuardarCancion(button) {
         id: $(button).data('id'),
         preview_url: $(button).data('preview_url'),
         uri: $(button).data('uri'),
+        image_url: $(button).data('image_url'),
         user_id: $('#hdnUserId').val()
     }
     $.ajax({
@@ -173,7 +173,7 @@ function GuardarCancion(button) {
             if (data.resultado != null) {
                 $('#hdnUserId').val(data.resultado.user_id);
 
-                $(button).text('Guardada');
+                $(button).html('Guardada ' + '<span> <i class="fas fa-check" aria-hidden="true"></i></span>');
             }
 
             
