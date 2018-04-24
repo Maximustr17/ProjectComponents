@@ -20,5 +20,6 @@ namespace Cenfotec.Components.Modelo
         public string id { get; set; }
         public string preview_url { get; set; }
         public string uri { get; set; }
+        public string image_url { get; set; }
     }
 }

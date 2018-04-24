@@ -142,11 +142,12 @@
         <ComplexType Name="PA_RET_TRACKS_SAVED_BY_USER_Result">
           <Property Type="Guid" Name="track_id" Nullable="false" />
           <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="href" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="id" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="preview_url" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="uri" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="spotify_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="href" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="id" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="preview_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="uri" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="image_url" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -200,6 +201,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="preview_url" ColumnName="preview_url" />
                 <ScalarProperty Name="uri" ColumnName="uri" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

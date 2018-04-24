@@ -8,6 +8,7 @@ using Cenfotec.Components.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -181,9 +182,26 @@ namespace Cenfotec.Components.Web.Controllers
             return Json(new { respuesta = "00" });
         }
 
-        public ActionResult VwSongList()
+        public ActionResult VwSongList(string id)
         {
-            return View();
+            RetrieveTracksSavedByUserReq oTracksByUserReq = null;
+            TrackModels modelo = new TrackModels();
+            ConsultasLN consultasLN = new ConsultasLN();
+            try
+            {
+                //Consultar las canciones guardadas por un usuario
+                oTracksByUserReq = new RetrieveTracksSavedByUserReq();
+                oTracksByUserReq.id_user = !String.IsNullOrEmpty(id) ? Guid.Parse(Encoding.UTF8.GetString(Convert.FromBase64String(id))) : Guid.Empty;
+                modelo.CopyTracksByUser(consultasLN.RetrieveTracksSavedByUser(oTracksByUserReq));
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return View(modelo);
         }
     }
 }

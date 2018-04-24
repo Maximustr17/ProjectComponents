@@ -185,3 +185,10 @@ function GuardarCancion(button) {
 
 }
 
+function VerMiMusica()
+{
+    var user_id = btoa($('#hdnUserId').val());
+
+    window.location.href = "User/VwSongList?id=" + user_id;
+}
+
