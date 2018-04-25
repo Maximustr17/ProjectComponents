@@ -8,6 +8,7 @@ using Cenfotec.Components.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -192,6 +193,7 @@ namespace Cenfotec.Components.Web.Controllers
                 //Consultar las canciones guardadas por un usuario
                 oTracksByUserReq = new RetrieveTracksSavedByUserReq();
                 oTracksByUserReq.id_user = !String.IsNullOrEmpty(id) ? Guid.Parse(Encoding.UTF8.GetString(Convert.FromBase64String(id))) : Guid.Empty;
+                modelo.user_id = oTracksByUserReq.id_user;
                 modelo.CopyTracksByUser(consultasLN.RetrieveTracksSavedByUser(oTracksByUserReq));
 
             }
@@ -203,5 +205,95 @@ namespace Cenfotec.Components.Web.Controllers
 
             return View(modelo);
         }
+
+        [HttpPost]
+        public ActionResult EnviarCorreo(string correoDestino, string user_id)
+        {
+            ConsultasLN consultasLN = new ConsultasLN();
+            RetrieveTracksSavedByUserReq oTracksByUserReq = null;
+            RetrieveTracksSavedByUserRes oTracksByUserRes = null;
+
+            try
+            {
+                //Consultar las canciones guardadas por un usuario
+                oTracksByUserReq = new RetrieveTracksSavedByUserReq();
+                oTracksByUserReq.id_user = Guid.Parse(user_id);
+                oTracksByUserRes = consultasLN.RetrieveTracksSavedByUser(oTracksByUserReq);
+
+                string correoOrigen = "envio.anuncios.proyecto@gmail.com";
+                string contrasenaCorreoActivaciones = "envioanunciosproyecto";
+                string servidorSmtp = "smtp.gmail.com";
+
+                MailMessage email = new MailMessage(correoOrigen, correoDestino);
+                //opciones de notificación de entrega
+                email.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure | DeliveryNotificationOptions.OnSuccess | DeliveryNotificationOptions.Delay;
+
+                /***********Cambiar*************/
+                email.Subject = "Su lista de canciones guardadas";
+                email.Body = CrearFormatoCorreo(oTracksByUserRes);
+                email.IsBodyHtml = true;
+
+                SmtpClient clienteSMTP = new SmtpClient(servidorSmtp);
+                clienteSMTP.Port = 587;
+                clienteSMTP.EnableSsl = true;
+                clienteSMTP.UseDefaultCredentials = false;
+                System.Net.NetworkCredential cred = new System.Net.NetworkCredential(correoOrigen, contrasenaCorreoActivaciones);
+                clienteSMTP.Credentials = cred;
+                clienteSMTP.Send(email);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Json(new { respuesta = "00" });
+        }
+        private static string CrearFormatoCorreo(RetrieveTracksSavedByUserRes trackList)
+        {
+            StringBuilder mensajeCorreo = new StringBuilder();
+
+            mensajeCorreo.AppendLine("<!DOCTYPE html>");
+            mensajeCorreo.AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
+
+            mensajeCorreo.AppendLine("<head>");
+            mensajeCorreo.AppendLine("    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">");
+            mensajeCorreo.AppendLine("    <meta name=\"GENERATOR\" content=\"MSHTML 11.00.9600.17924\">");
+            mensajeCorreo.AppendLine("</head>");
+
+            mensajeCorreo.AppendLine("<body>");
+            mensajeCorreo.AppendLine("<div class=\"row\">");
+            mensajeCorreo.AppendLine("<div class=\"col-md-6\">");
+            mensajeCorreo.AppendLine("<div class=\"container\">");
+            mensajeCorreo.AppendLine("<h2 style=\"margin-bottom:20px\">Sus canciones guardadas</h2>");
+            mensajeCorreo.AppendLine("<table class=\"table\">");
+            mensajeCorreo.AppendLine("<thead>");
+            mensajeCorreo.AppendLine("<tr>");
+            mensajeCorreo.AppendLine("<td>Nombre</td>");
+            mensajeCorreo.AppendLine("</tr>");
+            mensajeCorreo.AppendLine("</thead>");
+
+            mensajeCorreo.AppendLine("<tbody>");
+
+            foreach (var track in trackList.Tracks)
+            {
+                mensajeCorreo.AppendLine("<tr>");
+                mensajeCorreo.AppendLine("<td><a target=\"_blank\" href=\"" + track.spotify_url + "\">" + track.name + "</a></td>");
+                mensajeCorreo.AppendLine("</tr>");
+            }
+            mensajeCorreo.AppendLine("</tbody>");
+
+            mensajeCorreo.AppendLine("</table>");
+            mensajeCorreo.AppendLine("</div>");
+            mensajeCorreo.AppendLine("</div>");
+            mensajeCorreo.AppendLine("</div>");
+
+            mensajeCorreo.AppendLine("</body>");
+            mensajeCorreo.AppendLine("</html>");
+            return mensajeCorreo.ToString();
+        }
+        public ActionResult vistapueba()
+        {
+            return View();
+        }
     }
 }
+ 

@@ -69,7 +69,6 @@ function AddInformationOfUser(user) {
             });
         }
     }
-    
 }
 
 function GetURLParameter(sParam) {
@@ -82,6 +81,47 @@ function GetURLParameter(sParam) {
         }
     }
     return null;
+
+    function EnviarCorreo() {
+
+        swal({
+            title: "Envío por correo",
+            text: "Ingrese el correo electrónico:",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "Correo electrónico"
+        }, function (inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("El correo electrónico es requerido");
+                return false
+            }
+            else {
+                var modelo = {
+                    correoDestino: inputValue,
+                    asunto: "Asunto",
+                    mensaje: "Hola",
+                    urlEmpresa: ""
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '/User/EnviarCorreo',
+                    data: JSON.stringify(modelo),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        //swal("JAAAAI!", "You wrote: " + inputValue, "success");
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        });
+    }
 }
 
 function MakeTheSearch() {
@@ -191,4 +231,8 @@ function VerMiMusica()
 
     window.location.href = "User/VwSongList?id=" + user_id;
 }
+
+
+
+
 

@@ -1,6 +1,7 @@
 ﻿@model Cenfotec.Components.Web.Models.TrackModels
 @{
     string versionAssembly = typeof(Cenfotec.Components.Web.MvcApplication).Assembly.GetName().Version.ToString();
+    var urlBase = this.Request.Url.Scheme + "://" + this.Request.Url.Host + ":" + this.Request.Url.Port + this.Request.ApplicationPath;
 }
 <head>
     <meta charset="utf-8">
@@ -24,7 +25,7 @@
     else
     {
         <div class="alert alert-warning">
-            <center> 
+            <center>
                 <strong>Aún no tiene canciones guardadas <i class="fas fa-frown"></i></strong>
             </center>
         </div>
@@ -32,11 +33,59 @@
 
         <div class="row" style="margin-top:30px">
             <div class="col-md-3">
-                <a class="btn btn-outline-primary btn-md" href="../Home/Index"><i class="fas fa-hand-point-left"></i></i> Regresar</a>
+                <a class="btn btn-outline-primary btn-md" href="../Home/Index"><i class="fas fa-hand-point-left"></i>Regresar</a>
             </div>
-        </div>
+            @if (Model != null && Model.TracksList != null && Model.TracksList.Count > 0)
+            {
+                <div class="col-md-3">
+                    <a class="btn btn-outline-primary btn-md" id="btnEnviarPorCorreo()" onclick="EnviarCorreo()"><i class="far fa-envelope-open"></i> Enviar por correo</a>
+                </div>
+            }
 
+        </div>
+    <input type="hidden" id="hdnUserId" value="@Model.user_id" />
 </body>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <script src="~/Scripts/Spotify/spotify.js?v=@(versionAssembly)"></script>
+<link rel="stylesheet" href="~/Content/sweet-alert.css?v=@(versionAssembly)">
+<script src="~/Scripts/sweet-alert.js?v=@(versionAssembly)"></script>
+
+<script>
+    function EnviarCorreo() {
+        swal({
+            title: "Envío por correo",
+            text: "Ingrese el correo electrónico:",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "Correo electrónico"
+        }, function (inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("El correo electrónico es requerido");
+                return false
+            }
+            else {
+                var modelo = {
+                    correoDestino: inputValue,
+                    user_id: $('#hdnUserId').val()
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url:  '@urlBase' + 'User/EnviarCorreo',
+                    data: JSON.stringify(modelo),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        swal("Envío exitoso!", "Su lista de canciones fue enviada al correo: " + inputValue, "success");
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        });
+    }
+</script>
