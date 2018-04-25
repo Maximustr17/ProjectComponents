@@ -253,38 +253,31 @@ namespace Cenfotec.Components.Web.Controllers
 
             mensajeCorreo.AppendLine("<!DOCTYPE html>");
             mensajeCorreo.AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
-
             mensajeCorreo.AppendLine("<head>");
             mensajeCorreo.AppendLine("    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">");
             mensajeCorreo.AppendLine("    <meta name=\"GENERATOR\" content=\"MSHTML 11.00.9600.17924\">");
             mensajeCorreo.AppendLine("</head>");
 
             mensajeCorreo.AppendLine("<body>");
-            mensajeCorreo.AppendLine("<div class=\"row\">");
-            mensajeCorreo.AppendLine("<div class=\"col-md-6\">");
-            mensajeCorreo.AppendLine("<div class=\"container\">");
             mensajeCorreo.AppendLine("<h2 style=\"margin-bottom:20px\">Sus canciones guardadas</h2>");
-            mensajeCorreo.AppendLine("<table class=\"table\">");
+            mensajeCorreo.AppendLine("<table style=\"border-collapse:collapse; text-align:center;\" >");
             mensajeCorreo.AppendLine("<thead>");
-            mensajeCorreo.AppendLine("<tr>");
-            mensajeCorreo.AppendLine("<td>Nombre</td>");
+            mensajeCorreo.AppendLine("<tr style =\"background-color:#6FA1D2; color:#ffffff;\">");
+            mensajeCorreo.AppendLine("<th>Nombre</th>");
             mensajeCorreo.AppendLine("</tr>");
             mensajeCorreo.AppendLine("</thead>");
 
-            mensajeCorreo.AppendLine("<tbody>");
+            mensajeCorreo.AppendLine("<tbody class=\"table - hover\">");
 
             foreach (var track in trackList.Tracks)
             {
-                mensajeCorreo.AppendLine("<tr>");
-                mensajeCorreo.AppendLine("<td><a target=\"_blank\" href=\"" + track.spotify_url + "\">" + track.name + "</a></td>");
+                mensajeCorreo.AppendLine("<tr style =\"color:#555555;\">");
+                mensajeCorreo.AppendLine("<td style=\" border-color:#5c87b2; border-style:solid; border-width:thin; padding: 5px;\"><a target=\"_blank\" href=\"" + track.spotify_url + "\">" + track.name + "</a></td>");
                 mensajeCorreo.AppendLine("</tr>");
             }
             mensajeCorreo.AppendLine("</tbody>");
 
             mensajeCorreo.AppendLine("</table>");
-            mensajeCorreo.AppendLine("</div>");
-            mensajeCorreo.AppendLine("</div>");
-            mensajeCorreo.AppendLine("</div>");
 
             mensajeCorreo.AppendLine("</body>");
             mensajeCorreo.AppendLine("</html>");
