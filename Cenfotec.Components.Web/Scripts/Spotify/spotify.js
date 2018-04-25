@@ -40,6 +40,8 @@ function AddInformationOfUser(user) {
         $("#txtUserName").text(user.email);
         $("#txtUserName").text(display_name);
         $("#BtnLogIn").remove();
+        $("#frmBuscar").css('display', 'block');
+        $("#misCanciones").css('display', 'block');
 
         if (user != null) {
             var modelo = {
@@ -59,8 +61,6 @@ function AddInformationOfUser(user) {
                 success: function (data) {
                     if (data.resultado != null) {
                         $('#hdnUserId').val(data.resultado.user_id);
-                        $("#frmBuscar").css('display', 'block');
-                        $("#misCanciones").css('display', 'block');
                     }
                 },
                 error: function () {
