@@ -283,10 +283,6 @@ namespace Cenfotec.Components.Web.Controllers
             mensajeCorreo.AppendLine("</html>");
             return mensajeCorreo.ToString();
         }
-        public ActionResult vistapueba()
-        {
-            return View();
-        }
     }
 }
  
