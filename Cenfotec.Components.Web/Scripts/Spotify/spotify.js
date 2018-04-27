@@ -5,6 +5,7 @@ var scope = "user-read-private%20user-read-email%20playlist-read-private%20user-
 
 
 $(document).ready(function () {
+    
     var accessToken = GetURLParameter("access_token");
 
     if (accessToken !== null)
@@ -23,8 +24,9 @@ $(document).ready(function () {
     $("#btnToSearch").click(MakeTheSearch);
 });
 
+$('#modalPageLoad').modal('show');  
 function AddInformationOfUser(user) {
-
+    $('#modalPageLoad').modal('show');
     if (user != null) {
         var defaultUserLink = "http://www.gravatar.com/avatar/?d=mm&s=200";
 
@@ -61,6 +63,8 @@ function AddInformationOfUser(user) {
                         $('#hdnUserId').val(data.resultado.user_id);
                         $("#frmBuscar").css('display', 'block');
                         $("#misCanciones").css('display', 'block');
+
+                        $('#modalPageLoad').modal('hide');
                     }
                 },
                 error: function () {
@@ -233,6 +237,7 @@ function VerMiMusica() {
 
     window.location.href = "../User/VwSongList?id=" + user_id + "&access_token=" + GetURLParameter("access_token");
 }
+
 
 
 

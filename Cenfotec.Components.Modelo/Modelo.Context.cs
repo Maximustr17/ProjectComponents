@@ -146,5 +146,18 @@ namespace Cenfotec.Components.Modelo
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PA_RET_TRACKS_SAVED_BY_USER_Result>("PA_RET_TRACKS_SAVED_BY_USER", id_userParameter, eSTADO, mENSAJE);
         }
+    
+        public virtual int PA_DEL_TRACK_X_USER(string track_id, Nullable<System.Guid> user_id, ObjectParameter eSTADO, ObjectParameter mENSAJE)
+        {
+            var track_idParameter = track_id != null ?
+                new ObjectParameter("track_id", track_id) :
+                new ObjectParameter("track_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PA_DEL_TRACK_X_USER", track_idParameter, user_idParameter, eSTADO, mENSAJE);
+        }
     }
 }

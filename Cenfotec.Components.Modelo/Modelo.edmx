@@ -5,6 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="components_bdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="PA_DEL_TRACK_X_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="track_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
+          <Parameter Name="MENSAJE" Type="varchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="PA_RET_TRACK_X_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="varchar" Mode="In" />
           <Parameter Name="ESTADO" Type="varchar" Mode="InOut" />
@@ -109,6 +115,12 @@
             <Parameter Name="ESTADO" Mode="InOut" Type="String" />
             <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PA_DEL_TRACK_X_USER">
+            <Parameter Name="track_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="ESTADO" Mode="InOut" Type="String" />
+            <Parameter Name="MENSAJE" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PA_CONS_USER_X_ID_Result">
           <Property Type="Guid" Name="user_id" Nullable="false" />
@@ -205,6 +217,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PA_DEL_TRACK_X_USER" FunctionName="components_bdModel.Store.PA_DEL_TRACK_X_USER" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

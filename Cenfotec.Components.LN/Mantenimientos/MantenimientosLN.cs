@@ -82,6 +82,29 @@ namespace Cenfotec.Components.LN.Mantenimientos
             }
             return oRes;
         }
+
+        public DeleteTrackByUserRes DeleteTrackByUser(DeleteTrackByUserReq oReq)
+        {
+            MantenimientosAD mantenimientosAD = new MantenimientosAD();
+            DeleteTrackByUserRes oRes = new DeleteTrackByUserRes();
+
+            try
+            {
+                oRes = mantenimientosAD.DeleteTrackByUser(oReq);
+            }
+            catch (Exception ex)
+            {
+                oRes.estado = "99";
+                oRes.mensaje = "MENSAJE_ERROR_LN" + ((ex.InnerException != null) ? Environment.NewLine + ex.InnerException.Message : string.Empty);
+                throw;
+            }
+            finally
+            {
+                // Liberamos la memoria
+                mantenimientosAD = null;
+            }
+            return oRes;
+        }
         #endregion
 
     }

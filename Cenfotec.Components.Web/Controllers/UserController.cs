@@ -247,6 +247,7 @@ namespace Cenfotec.Components.Web.Controllers
             }
             return Json(new { respuesta = "00" });
         }
+
         private static string CrearFormatoCorreo(RetrieveTracksSavedByUserRes trackList)
         {
             StringBuilder mensajeCorreo = new StringBuilder();
@@ -282,6 +283,26 @@ namespace Cenfotec.Components.Web.Controllers
             mensajeCorreo.AppendLine("</body>");
             mensajeCorreo.AppendLine("</html>");
             return mensajeCorreo.ToString();
+        }
+
+        [HttpPost]
+        public ActionResult EliminarCancion(TrackModels modelo)
+        {
+            DeleteTrackByUserReq oDeleteTrackReq = null;
+            MantenimientosLN mantenimientosLN = new MantenimientosLN();
+
+            try
+            {
+                if (modelo != null)
+                {
+                    oDeleteTrackReq = new DeleteTrackByUserReq();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Json(new { respuesta = "00" });
         }
     }
 }

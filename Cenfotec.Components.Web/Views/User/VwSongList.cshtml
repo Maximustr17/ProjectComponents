@@ -17,10 +17,16 @@
 
     @if (Model != null && Model.TracksList != null && Model.TracksList.Count > 0)
     {
-        foreach (var track in Model.TracksList)
-        {
-            <iframe src="@track.src" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        }
+        <div class="row">
+            @foreach (var track in Model.TracksList)
+            {
+                <div class="col-md-4">
+                    <iframe src="@track.src" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <a onclick="EliminarCancion(@track.id, @track.user_id)" style="margin-bottom:30px"><span><i class="fas fa-trash-alt" style="font-size:30px;"></i></span></a>
+                </div>
+                
+            }
+        </div>
     }
     else
     {
@@ -104,5 +110,26 @@
             }
         }
         return null;
+    }
+
+    function EliminarCancion(track_id, user_id)
+    {
+        var modelo = {
+            id: track_id,
+            user_id: user_id
+        }
+        $.ajax({
+            type: "POST",
+            url:  '@urlBase' + 'User/EliminarCancion',
+            data: JSON.stringify(modelo),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                window.location.href = "../User/VwSongList?id=" + user_id + "&access_token=" + GetURLParameter("access_token");
+            },
+            error: function () {
+
+            }
+        });
     }
 </script>
