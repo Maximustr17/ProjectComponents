@@ -72,7 +72,10 @@ function AddInformationOfUser(user) {
 }
 
 function GetURLParameter(sParam) {
-    var sPageUrl = window.location.search.substring(1);
+    var url = window.location.search;
+    if (url === "")
+        url = window.location.hash;
+    var sPageUrl = url.substring(1);
     var sUrlVariables = sPageUrl.split("&");
     for (var i = 0; i < sUrlVariables.length; i++) {
         var sParameterName = sUrlVariables[i].split("=");
