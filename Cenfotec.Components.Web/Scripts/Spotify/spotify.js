@@ -19,7 +19,7 @@ $(document).ready(function () {
         });
     else
         $("#BtnLogIn").attr("href",
-            "https://accounts.spotify.com/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + urlToAcessAfterLogIn + "&scope="+scope);
+            "https://accounts.spotify.com/authorize?client_id=" + clientId + "&response_type=token&redirect_uri=" + urlToAcessAfterLogIn + "&scope=" + scope);
     $("#btnToSearch").click(MakeTheSearch);
 });
 
@@ -33,7 +33,7 @@ function AddInformationOfUser(user) {
             image = $("<div></div>").css("background-image", "url(" + user.images[0].url + ")").addClass("profileImage");
         }
 
-       // $("#mainBox").append(image);
+        // $("#mainBox").append(image);
         $("#profilePhoto").append(image);
 
         var display_name = user.display_name != null ? user.display_name : user.email;
@@ -52,7 +52,7 @@ function AddInformationOfUser(user) {
 
             $.ajax({
                 type: "POST",
-                url: 'User/SaveUser',
+                url: "../User/SaveUser",
                 data: JSON.stringify(modelo),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -72,7 +72,10 @@ function AddInformationOfUser(user) {
 }
 
 function GetURLParameter(sParam) {
-    var sPageUrl = window.location.hash.substring(1);
+    var url = window.location.search;
+    if (url === "")
+        url = window.location.hash;
+    var sPageUrl = url.substring(1);
     var sUrlVariables = sPageUrl.split("&");
     for (var i = 0; i < sUrlVariables.length; i++) {
         var sParameterName = sUrlVariables[i].split("=");
@@ -81,47 +84,47 @@ function GetURLParameter(sParam) {
         }
     }
     return null;
+}
 
-    function EnviarCorreo() {
+function EnviarCorreo() {
 
-        swal({
-            title: "Envío por correo",
-            text: "Ingrese el correo electrónico:",
-            type: "input",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            inputPlaceholder: "Correo electrónico"
-        }, function (inputValue) {
-            if (inputValue === false) return false;
-            if (inputValue === "") {
-                swal.showInputError("El correo electrónico es requerido");
-                return false
+    swal({
+        title: "Envío por correo",
+        text: "Ingrese el correo electrónico:",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Correo electrónico"
+    }, function (inputValue) {
+        if (inputValue === false) return false;
+        if (inputValue === "") {
+            swal.showInputError("El correo electrónico es requerido");
+            return false
+        }
+        else {
+            var modelo = {
+                correoDestino: inputValue,
+                asunto: "Asunto",
+                mensaje: "Hola",
+                urlEmpresa: ""
             }
-            else {
-                var modelo = {
-                    correoDestino: inputValue,
-                    asunto: "Asunto",
-                    mensaje: "Hola",
-                    urlEmpresa: ""
+
+            $.ajax({
+                type: "POST",
+                url: '../User/EnviarCorreo',
+                data: JSON.stringify(modelo),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //swal("JAAAAI!", "You wrote: " + inputValue, "success");
+                },
+                error: function () {
+
                 }
+            });
+        }
 
-                $.ajax({
-                    type: "POST",
-                    url: '/User/EnviarCorreo',
-                    data: JSON.stringify(modelo),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        //swal("JAAAAI!", "You wrote: " + inputValue, "success");
-                    },
-                    error: function () {
-
-                    }
-                });
-            }
-
-        });
-    }
+    });
 }
 
 function MakeTheSearch() {
@@ -205,7 +208,7 @@ function GuardarCancion(button) {
     }
     $.ajax({
         type: "POST",
-        url: 'User/SaveTrack',
+        url: '../User/SaveTrack',
         data: JSON.stringify(modelo),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -216,7 +219,7 @@ function GuardarCancion(button) {
                 $(button).html('Guardada ' + '<span> <i class="fas fa-check" aria-hidden="true"></i></span>');
             }
 
-            
+
         },
         error: function () {
 
@@ -225,11 +228,10 @@ function GuardarCancion(button) {
 
 }
 
-function VerMiMusica()
-{
+function VerMiMusica() {
     var user_id = btoa($('#hdnUserId').val());
 
-    window.location.href = "User/VwSongList?id=" + user_id;
+    window.location.href = "../User/VwSongList?id=" + user_id + "&access_token=" + GetURLParameter("access_token");
 }
 
 
